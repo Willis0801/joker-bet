@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JOKER BET | Gold Edition</title>
+<style>
+:root{
+ --bg:#090909;--panel:#181818;--gold:#d4af37;
+ --text:#f5f1e8;--muted:#aaa;--line:#393020;
+ --green:#23c77b;--red:#ed4b58
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Arial,sans-serif;padding-bottom:85px
+}
+header{
+ background:#111;border-bottom:1px solid var(--gold);
+ padding:16px;display:flex;align-items:center;
+ justify-content:space-between;gap:10px
+}
+.logo{font-weight:900;color:var(--gold);font-size:21px}
+small,.muted{color:var(--muted)}
+.balance{color:var(--gold);font-weight:bold}
+main{max-width:850px;margin:auto;padding:16px}
+h1{font-size:25px;color:var(--gold)}
+h2{font-size:20px;margin-top:0;color:var(--gold)}
+.card{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:16px;padding:18px;margin-bottom:16px
+}
+.hero{
+ text-align:center;padding:30px 12px;
+ background:linear-gradient(140deg,#242015,#090909);
+ border:1px solid var(--gold);border-radius:18px;
+ margin-bottom:20px
+}
+.hero .symbol{font-size:55px;color:var(--gold)}
+button{
+ background:var(--gold);color:#111;border:0;
+ padding:13px 16px;border-radius:9px;
+ font-weight:bold;cursor:pointer;font-size:14px
+}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.secondary{
+ background:#292929;color:var(--gold);
+ border:1px solid var(--gold)
+}
+input{
+ width:100%;padding:13px;border-radius:8px;
+ border:1px solid #555;background:#101010;
+ color:white;font-size:16px;margin:8px 0 12px
+}
+label{font-size:13px;color:#ccc}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.grid .card{margin:0}
+nav{
+ position:fixed;bottom:0;left:0;right:0;
+ background:#121212;border-top:1px solid var(--gold);
+ display:flex;justify-content:space-around;padding:9px 3px;
+ z-index:20
+}
+nav button{
+ background:none;color:#ccc;padding:8px 4px;
+ font-size:12px;flex:1
+}
+nav button.active{color:var(--gold)}
+.page{display:none}
+.page.active{display:block}
+.result{
+ text-align:center;font-size:27px;font-weight:bold;
+ padding:25px 8px;color:var(--gold);
+ overflow-wrap:anywhere
+}
+.message{color:var(--muted);min-height:22px;font-size:14px}
+.row{display:flex;gap:9px;flex-wrap:wrap}
+.row button{flex:1}
+.green{color:var(--green)}
+.red{color:var(--red)}
+#flight{
+ height:180px;border-radius:12px;
+ background:linear-gradient(#15202d,#101010);
+ display:flex;flex-direction:column;
+ align-items:center;justify-content:center;
+ overflow:hidden;position:relative
+}
+#plane{font-size:38px;transition:transform .15s}
+#multiplier{font-size:39px;color:var(--gold);font-weight:bold}
+#rouletteWheel{
+ width:145px;height:145px;border-radius:50%;
+ border:8px solid var(--gold);margin:16px auto;
+ display:grid;place-items:center;
+ background:conic-gradient(
+ #bc2434 0 45deg,#111 45deg 90deg,
+ #bc2434 90deg 135deg,#111 135deg 180deg,
+ #bc2434 180deg 225deg,#111 225deg 270deg,
+ #bc2434 270deg 315deg,#111 315deg 360deg);
+ transition:transform 2s ease-out
+}
+#rouletteNumber{
+ background:#111;border:2px solid var(--gold);
+ width:65px;height:65px;border-radius:50%;
+ display:grid;place-items:center;font-size:30px
+}
+.reels{
+ display:flex;justify-content:center;gap:10px;
+ font-size:43px;margin:22px 0
+}
+.reels span{
+ background:#080808;border:1px solid var(--gold);
+ padding:14px 8px;border-radius:10px;min-width:65px;
+ text-align:center
+}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td,th{padding:10px 5px;border-bottom:1px solid #333;text-align:left}
+.scroll{overflow-x:auto}
+footer{text-align:center;color:#888;font-size:12px;padding:15px}
+@media(min-width:700px){
+ .grid{grid-template-columns:repeat(3,1fr)}
+ nav{max-width:850px;margin:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <div class="logo">♠ JOKER BET</div>
+  <small>GOLD EDITION • DEMO</small>
+ </div>
+ <div style="text-align:right">
+  <small>CARTEIRA</small>
+  <div class="balance"><span id="topBalance">1000</span> CR</div>
+ </div>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+ <div class="hero">
+  <div class="symbol">♠</div>
+  <h1>JOKER BET</h1>
+  <p>GOLD EDITION</p>
+  <p class="muted">Seu cassino demonstrativo</p>
+  <small>Créditos fictícios • Sem dinheiro real</small>
+ </div>
+
+ <h2>Escolha seu jogo</h2>
+ <div class="grid">
+  <div class="card">
+   <div class="result">✈</div>
+   <h2>Voo Dourado</h2>
+   <p class="muted">Crash com multiplicador crescente.</p>
+   <button onclick="showPage('crash')">JOGAR</button>
+  </div>
+  <div class="card">
+   <div class="result">🎯</div>
+   <h2>Roleta Gold</h2>
+   <p class="muted">Roleta europeia demonstrativa.</p>
+   <button onclick="showPage('roulette')">JOGAR</button>
+  </div>
+  <div class="card">
+   <div class="result">🎰</div>
+   <h2>Slots Royal</h2>
+   <p class="muted">Três rolos e símbolos premiados.</p>
+   <button onclick="showPage('slots')">JOGAR</button>
+  </div>
+ </div>
+</section>
+
+<section id="crash" class="page">
+ <h1>✈ Voo Dourado</h1>
+ <div class="card">
+  <div id="flight">
+   <div id="plane">✈</div>
+   <div id="multiplier">1.00x</div>
+  </div>
+  <p id="crashMessage" class="message">
+   Escolha sua aposta fictícia e inicie o voo.
+  </p>
+  <label>Valor da aposta (CR)</label>
+  <input id="crashBet" type="number" min="1" step="1" value="10">
+  <div class="row">
+   <button id="startCrash" onclick="startCrashGame()">
+    INICIAR VOO
+   </button>
+   <button id="cashout" class="secondary"
+    onclick="cashOut()" disabled>
+    RETIRAR CRÉDITOS
+   </button>
+  </div>
+  <p class="muted">
+   Encerre antes da queda para receber o multiplicador
+   exibido. O ponto de queda é definido antes do voo.
+  </p>
+ </div>
+</section>
+
+<section id="roulette" class="page">
+ <h1>🎯 Roleta Gold</h1>
+ <div class="card">
+  <div id="rouletteWheel">
+   <div id="rouletteNumber">?</div>
+  </div>
+  <label>Valor da aposta (CR)</label>
+  <input id="rouletteBet" type="number" min="1" step="1" value="10">
+  <label>Escolha uma opção</label>
+  <select id="rouletteChoice" style="
+   width:100%;padding:13px;margin:8px 0 15px;
+   background:#111;color:white;border:1px solid #555;
+   border-radius:8px;font-size:16px">
+   <option value="red">Vermelho — 1:1</option>
+   <option value="black">Preto — 1:1</option>
+   <option value="green">Verde (zero) — 35:1</option>
+  </select>
+  <button id="spinRoulette" onclick="playRoulette()">
+   GIRAR ROLETA
+  </button>
+  <p id="rouletteMessage" class="message"></p>
+ </div>
+</section>
+
+<section id="slots" class="page">
+ <h1>🎰 Slots Royal</h1>
+ <div class="card">
+  <div class="reels">
+   <span id="reel1">🍒</span>
+   <span id="reel2">⭐</span>
+   <span id="reel3">💎</span>
+  </div>
+  <label>Valor da aposta (CR)</label>
+  <input id="slotsBet" type="number" min="1" step="1" value="10">
+  <button id="spinSlots" onclick="playSlots()">
+   GIRAR ROLOS
+  </button>
+  <p id="slotsMessage" class="message"></p>
+  <p class="muted">
+   Três símbolos iguais: 10x o valor apostado.
+   Dois símbolos iguais: 2x o valor apostado.
+   Outras combinações: sem prêmio.
+  </p>
+ </div>
+</section>
+
+<section id="wallet" class="page">
+ <h1>Minha carteira</h1>
+ <div class="card">
+  <small>SALDO DISPONÍVEL</small>
+  <div class="result"><span id="walletBalance">1000</span> CR</div>
+  <p class="muted">Créditos sem valor monetário.</p>
+  <button onclick="recharge()">RECARREGAR GRÁTIS</button>
+  <p id="walletMessage" class="message"></p>
+ </div>
+ <div class="card">
+  <h2>Histórico de partidas</h2>
+  <div class="scroll">
+   <table>
+    <thead><tr>
+     <th>Data</th><th>Jogo</th><th>Resultado</th><th>Saldo</th>
+    </tr></thead>
+    <tbody id="historyBody"></tbody>
+   </table>
+  </div>
+ </div>
+</section>
+
+<section id="admin" class="page">
+ <h1>Painel demonstrativo</h1>
+ <div class="grid">
+  <div class="card">
+   <small>PARTIDAS</small>
+   <div class="result" id="totalGames">0</div>
+  </div>
+  <div class="card">
+   <small>CRÉDITOS ATUAIS</small>
+   <div class="result" id="adminBalance">1000</div>
+  </div>
+  <div class="card">
+   <small>RECARGAS GRÁTIS</small>
+   <div class="result" id="totalRecharges">0</div>
+  </div>
+ </div>
+ <div class="card">
+  <h2>Administração local</h2>
+  <p class="muted">
+   Esta tela mostra apenas os dados deste navegador.
+   Não existe acesso remoto ou cadastro de usuários.
+  </p>
+  <button class="secondary" onclick="resetDemo()">
+   REINICIAR DEMONSTRAÇÃO
+  </button>
+ </div>
+</section>
+
+</main>
+
+<nav>
+ <button id="nav-home" class="active"
+ onclick="showPage('home')">⌂<br>INÍCIO</button>
+ <button id="nav-crash"
+ onclick="showPage('crash')">✈<br>AVIÃO</button>
+ <button id="nav-roulette"
+ onclick="showPage('roulette')">🎯<br>ROLETA</button>
+ <button id="nav-slots"
+ onclick="showPage('slots')">🎰<br>SLOTS</button>
+ <button id="nav-wallet"
+ onclick="showPage('wallet')">◈<br>CARTEIRA</button>
+ <button id="nav-admin"
+ onclick="showPage('admin')">⚙<br>PAINEL</button>
+</nav>
+
+<footer>
+ JOKER BET • DEMONSTRAÇÃO GRATUITA<br>
+ Sem depósitos, saques ou prêmios reais.
+</footer>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "joker_bet_demo_v1";
+
+const INITIAL_STATE = {
+ balance:1000,
+ history:[],
+ games:0,
+ recharges:0
+};
+
+function loadState(){
+ try{
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if(
+   saved &&
+   Number.isSafeInteger(saved.balance) &&
+   saved.balance >= 0 &&
+   Array.isArray(saved.history) &&
+   Number.isSafeInteger(saved.games) &&
+   Number.isSafeInteger(saved.recharges)
+  ){
+   return saved;
+  }
+ }catch(e){}
+ return structuredClone(INITIAL_STATE);
+}
+
+let state = loadState();
+let crashActive = false;
+let crashTimer = null;
+let crashStake = 0;
+let crashPoint = 1;
+let currentMultiplier = 1;
+let crashStart = 0;
+let rouletteBusy = false;
+let slotsBusy = false;
+
+const $ = id => document.getElementById(id);
+
+function save(){
+ try{
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+ }catch(e){
+  console.warn("Armazenamento local indisponível.");
+ }
+ updateUI();
+}
+
+function updateUI(){
+ $("topBalance").textContent = state.balance;
+ $("walletBalance").textContent = state.balance;
+ $("adminBalance").textContent = state.balance;
+ $("totalGames").textContent = state.games;
+ $("totalRecharges").textContent = state.recharges;
+
+ const body = $("historyBody");
+ body.replaceChildren();
+
+ state.history.slice(0,30).forEach(item=>{
+  const tr = document.createElement("tr");
+  [item.date,item.game,item.result,item.balance]
+   .forEach(value=>{
+    const td = document.createElement("td");
+    td.textContent = value;
+    tr.appendChild(td);
+   });
+  body.appendChild(tr);
+ });
+}
+
+function showPage(id){
+ document.querySelectorAll(".page").forEach(page=>{
+  page.classList.toggle("active",page.id===id);
+ });
+ document.querySelectorAll("nav button").forEach(button=>{
+  button.classList.toggle("active",button.id==="nav-"+id);
+ });
+ window.scrollTo(0,0);
+ updateUI();
+}
+
+function randomInt(max){
+ if(!Number.isSafeInteger(max)||max<=0){
+  throw new Error("Intervalo inválido.");
+ }
+ const cryptoObj = window.crypto;
+ if(!cryptoObj || !cryptoObj.getRandomValues){
+  throw new Error("Gerador aleatório indisponível.");
+ }
+ const range = 4294967296;
+ const limit = Math.floor(range/max)*max;
+ const values = new Uint32Array(1);
+ let value;
+ do{
+  cryptoObj.getRandomValues(values);
+  value = values[0];
+ }while(value>=limit);
+ return value%max;
+}
+
+function randomUnit(){
+ return (randomInt(1000000)+0.5)/1000000;
+}
+
+function getStake(id){
+ const raw = $(id).value.trim();
+ const amount = Number(raw);
+
+ if(
+  !/^[1-9]\d*$/.test(raw) ||
+  !Number.isSafeInteger(amount) ||
+  amount>1000000
+ ){
+  alert("Digite uma aposta inteira entre 1 e 1.000.000 CR.");
+  return null;
+ }
+ if(amount>state.balance){
+  alert("Saldo fictício insuficiente.");
+  return null;
+ }
+ return amount;
+}
+
+function record(game,result){
+ state.games++;
+ state.history.unshift({
+  date:new Date().toLocaleString("pt-BR"),
+  game:game,
+  result:result,
+  balance:state.balance
+ });
+ state.history = state.history.slice(0,100);
+ save();
+}
+
+function recharge(){
+ if(crashActive||rouletteBusy||slotsBusy){
+  alert("Aguarde a partida terminar.");
+  return;
+ }
+ if(state.balance>1000000-1000){
+  $("walletMessage").textContent =
+   "Limite de créditos demonstrativos atingido.";
+  return;
+ }
+ state.balance+=1000;
+ state.recharges++;
+ save();
+ $("walletMessage").textContent =
+  "Você recebeu 1.000 créditos fictícios gratuitamente.";
+}
+
+function startCrashGame(){
+ if(crashActive||rouletteBusy||slotsBusy)return;
+ const amount=getStake("crashBet");
+ if(amount===null)return;
+
+ state.balance-=amount;
+ crashStake=amount;
+ currentMultiplier=1;
+ crashActive=true;
+ crashStart=performance.now();
+
+ // Probabilidade demonstrativa: 3% de queda em 1.00x.
+ // Nos demais casos, o ponto de queda é definido
+ // por uma distribuição de multiplicadores.
+ if(randomInt(100)<3){
+  crashPoint=1;
+ }else{
+  const u=randomUnit();
+  crashPoint=Math.min(100,Math.max(1.01,0.97/(1-u)));
+ }
+
+ $("startCrash").disabled=true;
+ $("cashout").disabled=false;
+ $("crashMessage").textContent="Voo em andamento...";
+ $("plane").style.transform="translate(0,0)";
+ save();
+
+ if(crashPoint===1){
+  finishCrash(false);
+  return;
+ }
+
+ crashTimer=setInterval(()=>{
+  const elapsed=(performance.now()-crashStart)/1000;
+  const next=Math.exp(elapsed*0.17);
+
+  if(next>=crashPoint){
+   finishCrash(false);
+   return;
+  }
+
+  currentMultiplier=Math.floor(next*100)/100;
+  $("multiplier").textContent=
+   currentMultiplier.toFixed(2)+"x";
+
+  $("plane").style.transform=
+   "translate("+
+   Math.min(65,elapsed*6)+"px,-"+
+   Math.min(50,elapsed*4)+"px)";
+ },50);
+}
+
+function finishCrash(won){
+ if(!crashActive)return;
+
+ clearInterval(crashTimer);
+ crashTimer=null;
+ crashActive=false;
+
+ $("startCrash").disabled=false;
+ $("cashout").disabled=true;
+
+ if(won){
+  const payout=Math.floor(crashStake*currentMultiplier);
+  state.balance+=payout;
+  $("crashMessage").textContent=
+   "Você encerrou em "+currentMultiplier.toFixed(2)+
+   "x e recebeu "+payout+" CR.";
+  record("Avião","+"+(payout-crashStake)+" CR");
+ }else{
+  $("multiplier").textContent=
+   crashPoint.toFixed(2)+"x";
+  $("crashMessage").textContent=
+   "O avião caiu em "+crashPoint.toFixed(2)+
+   "x. Você perdeu "+crashStake+" CR.";
+  record("Avião","-"+crashStake+" CR");
+ }
+ crashStake=0;
+}
+
+function cashOut(){
+ if(!crashActive)return;
+ const elapsed=(performance.now()-crashStart)/1000;
+ const exactMultiplier=Math.exp(elapsed*0.17);
+
+ if(exactMultiplier>=crashPoint){
+  finishCrash(false);
+  return;
+ }
+ currentMultiplier=Math.floor(exactMultiplier*100)/100;
+ $("multiplier").textContent=
+  currentMultiplier.toFixed(2)+"x";
+ finishCrash(true);
+}
+
+const RED_NUMBERS = new Set([
+ 1,3,5,7,9,12,14,16,18,
+ 19,21,23,25,27,30,32,34,36
+]);
+
+function playRoulette(){
+ if(crashActive||rouletteBusy||slotsBusy)return;
+ const amount=getStake("rouletteBet");
+ if(amount===null)return;
+
+ const choice=$("rouletteChoice").value;
+ const number=randomInt(37);
+ const color=number===0?"green":
+  RED_NUMBERS.has(number)?"red":"black";
+
+ state.balance-=amount;
+ rouletteBusy=true;
+ $("spinRoulette").disabled=true;
+ $("rouletteMessage").textContent="Girando...";
+ save();
+
+ const wheel=$("rouletteWheel");
+ const current=Number(wheel.dataset.rotation||0);
+ const rotation=current+1440+randomInt(360);
+ wheel.dataset.rotation=rotation;
+ wheel.style.transform="rotate("+rotation+"deg)";
+
+ setTimeout(()=>{
+  $("rouletteNumber").textContent=number;
+
+  const won=choice===color;
+  const payout=won?amount*(color==="green"?36:2):0;
+
+  state.balance+=payout;
+  $("rouletteMessage").textContent=
+   "Resultado: "+number+" ("+
+   (color==="red"?"vermelho":
+    color==="black"?"preto":"verde")+
+   "). "+(won?
+    "Você recebeu "+payout+" CR.":
+    "Você perdeu "+amount+" CR.");
+
+  record("Roleta",
+   (payout-amount>=0?"+":"")+
+   (payout-amount)+" CR");
+
+  rouletteBusy=false;
+  $("spinRoulette").disabled=false;
+ },2100);
+}
+
+const SYMBOLS=["🍒","⭐","💎","🔔","🍀","7️⃣"];
+
+function playSlots(){
+ if(crashActive||rouletteBusy||slotsBusy)return;
+ const amount=getStake("slotsBet");
+ if(amount===null)return;
+
+ state.balance-=amount;
+ slotsBusy=true;
+ $("spinSlots").disabled=true;
+ $("slotsMessage").textContent="Girando...";
+ save();
+
+ let ticks=0;
+ const animation=setInterval(()=>{
+  for(let i=1;i<=3;i++){
+   $("reel"+i).textContent=
+    SYMBOLS[randomInt(SYMBOLS.length)];
+  }
+  ticks++;
+  if(ticks>=12){
+   clearInterval(animation);
+   finishSlots(amount);
+  }
+ },90);
+}
+
+function finishSlots(amount){
+ const reels=[
+  SYMBOLS[randomInt(SYMBOLS.length)],
+  SYMBOLS[randomInt(SYMBOLS.length)],
+  SYMBOLS[randomInt(SYMBOLS.length)]
+ ];
+
+ reels.forEach((symbol,i)=>{
+  $("reel"+(i+1)).textContent=symbol;
+ });
+
+ const allSame=reels.every(s=>s===reels[0]);
+ const twoSame=new Set(reels).size===2;
+ const multiplier=allSame?10:twoSame?2:0;
+ const payout=amount*multiplier;
+
+ state.balance+=payout;
+ $("slotsMessage").textContent=
+  multiplier>0?
+   "Combinação premiada! Você recebeu "+payout+" CR.":
+   "Sem combinação. Você perdeu "+amount+" CR.";
+
+ record("Slots",
+  (payout-amount>=0?"+":"")+
+  (payout-amount)+" CR");
+
+ slotsBusy=false;
+ $("spinSlots").disabled=false;
+}
+
+function resetDemo(){
+ if(crashActive||rouletteBusy||slotsBusy){
+  alert("Aguarde a partida terminar.");
+  return;
+ }
+ if(!confirm("Apagar todo o histórico e reiniciar os créditos?")){
+  return;
+ }
+ state=structuredClone(INITIAL_STATE);
+ save();
+ $("crashMessage").textContent="Demonstração reiniciada.";
+ $("multiplier").textContent="1.00x";
+ $("rouletteNumber").textContent="?";
+ $("rouletteMessage").textContent="";
+ $("slotsMessage").textContent="";
+ $("walletMessage").textContent="";
+}
+
+updateUI();
+</script>
+</body>
+   </html>
+  
